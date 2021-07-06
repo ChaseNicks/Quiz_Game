@@ -1,0 +1,73 @@
+* {
+  font-family: sans-serif;
+}
+
+body {
+  background-image: url('../img/background.jpg');
+  margin: 0;
+  padding: 0;
+}
+
+header {
+    background-color: black;
+}
+
+
+#high-score {
+  display: inline-block;
+  color: black;
+  font-size: 18px;
+  padding: 5px 5px 5px 10px;
+  color: orange;
+}
+
+#time {
+  float: right;
+  color: black;
+  font-size: 18px;
+  padding: 5px 10px 5px 5px;
+  color: orange;
+}
+
+.container {
+  max-width: 50%;
+  margin: auto;
+}
+
+.start , .description , .choiceDescription {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-weight: normal;
+}
+
+.description, .choiceDescription {
+  /* background-color: black; */
+  color: orange;
+}
+
+button {
+  margin: 5px 5px 0px 5px;
+  background-color: black;
+  color: orange;
+  border-radius: 5px;
+  font-size: large;
+  border: 30px;
+}
+
+button:hover {
+  background-color: rgb(104, 96, 96);
+  cursor: pointer;
+}
+
+@media screen and (max-width: 1060px) {
+  .container {
+      width: 70%;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  .container {
+      width: 100%;
+  }
+}
