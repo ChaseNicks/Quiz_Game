@@ -1,15 +1,17 @@
-let correctIndex = null;
-
 var timeEl = document.getElementById("time");
 var descriptionEl = document.getElementById("description");
 var choiceDescriptionEl = document.getElementById("choiceDescription")
 var startButtonEl = document.getElementById("start");
 var choicesEl  = document.getElementById("choices");
 
+let correctIndex = null;
+let score = 0;
+let timeRemaining = 0;
+
 var question = [{
   question: "What is the full form of IP?",
   choices: ["Internet Provider", "Internet Port", "Internet Protocol"],
-  answer: 0
+  answer: 2
 }, {
   question: "Who is the founder of Microsoft?",
   choices: ["Bill Gates", "Steve Jobs", "Steve Wozniak"],
@@ -23,13 +25,14 @@ var question = [{
   choices: ["Brendan Eich", "Dennis Ritchie", "Guido van Rossum"],
   answer: 1
 }, {
-  question: "What does CC mean in emails?",
-  choices: ["Carbon Copy", "Creative Commons", "other"],
+  question: "What is the correct abbreviation for Java Script?",
+  choices: ["JaSc", "Java", "JS"],
   answer: 2
 }]; 
 
 function playGame() {
   startButtonEl.style.display = "none";
+  startTimer(60);
   runQuestion();
 }
 
@@ -55,8 +58,8 @@ function runQuestion() {
   
   randomQuestion.choices.forEach((choices, index) => {
       var ans = document.createElement("button");
-      ans.textContent = ((index + 1) + ": " + choices);
-      ans.setAttribute("style", "display: block; height: 40px;")
+      ans.textContent = (choices);
+      ans.setAttribute("style", "display: block; height: 50px;")
       ans.setAttribute("index", index);
       ansEl.appendChild(ans);
   })
@@ -64,21 +67,64 @@ function runQuestion() {
   correctIndex = randomQuestion.answer;
 }
 
+function startTimer (durationInSeconds) {
 
-function countdown() {
-    var timeLeft = 60;
-        timeEl.textContent = 'Time: ' + timeLeft;
+  timeRemaining = durationInSeconds;
+  countdown = setInterval(function () {
+      if (timeRemaining > 1) {
+          updateTimer();
+          timeRemaining--;
+      } else if (timeRemaining === 1) {
+          updateTimer();
+          timeRemaining--;
+      } else {
+          timeEl.textContent = "All out of time!";
+          stopGame();
+          clearInterval(countdown);
+      }
+  }, 1000);
+}
 
-    var timeInterval = setInterval(function () {
-        if (timeLeft > 1) {
-            timeEl.textContent = 'Time: ' + timeLeft;
-            timeLeft--;
-        } else {
-            timeEl.textContent = 'Opps, out of time!';
-            clearInterval(timeInterval);
-        }
-    } , 1000)
-};
+function updateTimer (wrongAnswer = false) {
+
+  if (timeRemaining === 0) {
+      clearInterval(countdown);
+      timeEl.textContent = `All out of time!`;
+      stopGame();
+      return;
+  }
+  timeEl.textContent = `Seconds remaining: ${timeRemaining}`;
+
+  if (wrongAnswer) {
+      timeEl.setAttribute("style", "color: red;");
+  } else {
+      timeEl.setAttribute("style", "color: orange;");
+  }
+}
+
+function changeScore(value) {
+  score = score + value;
+  if (score < 0) {
+      score = 0;
+  }
+}
+
+function stopGame() {
+
+  clearInterval(countdown);
+
+  choiceDescriptionEl.textContent = "";
+  descriptionEl.setAttribute("style", "font-size: 40px")
+  descriptionEl.textContent = "Woohoo, you finished!";
+
+  var thanksMessageEl = document.createElement("h3");
+  thanksMessageEl.setAttribute("id", "final-score")
+  thanksMessageEl.setAttribute("style", "color: orange; background-color: black;");
+  thanksMessageEl.textContent = `Final Score: ${score}`;
+
+  choiceDescriptionEl.appendChild(thanksMessageEl);
+}
+
 
 function RunGame() {
   document.getElementById("high-score").addEventListener("click", function() {
@@ -93,7 +139,18 @@ function RunGame() {
 
     if (element.matches("button")) {
         if (parseInt(element.getAttribute('index')) === correctIndex) {
+            changeScore(2);
             runQuestion();
+            updateTimer();
+        } else {
+          changeScore(-2);
+          if (timeRemaining >= 10) {
+            timeRemaining = timeRemaining - 10;
+          } else {
+            timeRemaining = 0;
+          }
+          updateTimer(true);
+          runQuestion();
         }
       }
     }
