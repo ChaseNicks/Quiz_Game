@@ -3,6 +3,7 @@ var descriptionEl = document.getElementById("description");
 var choiceDescriptionEl = document.getElementById("choiceDescription")
 var startButtonEl = document.getElementById("start");
 var choicesEl  = document.getElementById("choices");
+var gameEl = document.getElementById("game");
 
 let correctIndex = null;
 let score = 0;
@@ -117,19 +118,16 @@ function stopGame() {
   descriptionEl.setAttribute("style", "font-size: 40px")
   descriptionEl.textContent = "Woohoo, you finished!";
 
-  var thanksMessageEl = document.createElement("h3");
-  thanksMessageEl.setAttribute("id", "final-score")
-  thanksMessageEl.setAttribute("style", "color: orange; background-color: black;");
-  thanksMessageEl.textContent = `Final Score: ${score}`;
+  var finalMessageEl = document.createElement("h3");
+  finalMessageEl.setAttribute("id", "final-score")
+  finalMessageEl.setAttribute("style", "color: orange; background-color: black;");
+  finalMessageEl.textContent = `Final Score: ${score}`;
 
-  choiceDescriptionEl.appendChild(thanksMessageEl);
+  choiceDescriptionEl.appendChild(finalMessageEl);
 }
 
 
 function RunGame() {
-  document.getElementById("high-score").addEventListener("click", function() {
-    ViewHighscores();
-  });
   document.getElementById("start").addEventListener("click", function() {
     playGame();
   });

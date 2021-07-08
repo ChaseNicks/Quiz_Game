@@ -58,6 +58,7 @@ button {
   border-radius: 5px;
   font-size: large;
   border: 30px;
+  width: 50%;
 }
 
 #final-score {
