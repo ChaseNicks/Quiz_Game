@@ -1,5 +1,5 @@
 # Quiz_Game
-Homework 4
+
 
 ## Desprition
 Quiz game that tests your skills on coding / tech related questions which utilizies JS for various dynamic actions.
