@@ -29,6 +29,10 @@ var question = [{
   question: "What is the correct abbreviation for Java Script?",
   choices: ["JaSc", "Java", "JS"],
   answer: 2
+}, {
+  question: "Which one below is the correct syntax for a arrow function?",
+  choices: ["function init() {}", "const init  = () => {}", "var init => () {}", "let init ===> {}"],
+  answer: 1
 }]; 
 
 function playGame() {
@@ -60,7 +64,7 @@ function runQuestion() {
   randomQuestion.choices.forEach((choices, index) => {
       var ans = document.createElement("button");
       ans.textContent = (choices);
-      ans.setAttribute("style", "display: block; height: 50px;")
+      ans.setAttribute("style", "display: block; height: fit-content; width: 25rem;")
       ans.setAttribute("index", index);
       ansEl.appendChild(ans);
   })
@@ -120,7 +124,7 @@ function stopGame() {
 
   var finalMessageEl = document.createElement("h3");
   finalMessageEl.setAttribute("id", "final-score")
-  finalMessageEl.setAttribute("style", "color: orange; background-color: black;");
+  finalMessageEl.setAttribute("style", "color: orange; background-color: black; font-size: 2rem");
   finalMessageEl.textContent = `Final Score: ${score}`;
 
   choiceDescriptionEl.appendChild(finalMessageEl);
